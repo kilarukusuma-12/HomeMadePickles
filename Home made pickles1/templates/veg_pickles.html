@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veg Pickles - HomeMade Pickles & Snacks</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f1e4;
+        }
+
+        /* Navigation Bar (Same as home.html) */
+        header {
+            background-color: rgba(76, 114, 68, 0.95);
+            padding: 12px 20px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+            margin-left: auto;
+            padding: 0;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Search Bar */
+        .search-section {
+            margin: 100px auto 30px;
+            max-width: 1200px;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .search-bar {
+            width: 60%;
+            padding: 12px 25px;
+            border: 2px solid #4C7244;
+            border-radius: 30px;
+            font-size: 1rem;
+            margin: 0 auto;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .search-bar:focus {
+            outline: none;
+            box-shadow: 0 0 15px rgba(76, 114, 68, 0.2);
+            border-color: #3A5A35;
+        }
+
+        /* Adjust main margin */
+        main {
+            margin-top: 40px;
+        }
+
+        /* Remove old search bar styles from nav */
+        .nav-links input[type="text"] {
+            display: none;
+        }
+        
+
+        /* Product Grid */
+        main {
+            margin-top: 100px;
+            padding: 40px 20px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .product-form {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        }
+
+       .product-details {
+        flex-grow: 1;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 220px;
+            border-radius: 15px;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 3px solid #4C7244;
+            transition: transform 0.3s ease;
+        }
+
+        .product-name {
+            font-family: 'Playfair Display', serif;
+            color: #4C7244;
+            font-size: 1.5rem;
+            margin: 10px 0;
+        }
+
+        .product-description {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        .quantity-select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .cart-btn {
+            background: #4C7244;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s ease;
+        }
+
+        .cart-btn:hover {
+            background: #3A5A35;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #4C7244;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <ul class="nav-links">
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('veg_pickles') }}">Veg Pickles</a></li>
+            <li><a href="{{ url_for('non_veg_pickles') }}">Non-Veg Pickles</a></li>
+            <li><a href="{{ url_for('snacks') }}">Snacks</a></li>
+            <li><a href="{{ url_for('cart') }}">🛒 Cart <span id="cart-count">0</span></a></li>
+            <li><input type="text" class="search-bar" placeholder="Search products..."></li>
+        </ul>
+    </header>
+
+    <div class="search-section">
+        <form method="GET" action="{{ url_for('veg_pickles') }}">
+            <input type="text" 
+                   class="search-bar" 
+                   name="search"
+                   placeholder="Search  veg_pickles..."
+                   aria-label="Search veg_pickles"
+                   value="{{ request.args.get('search', '') }}">
+        </form>
+    </div>
+
+    <main>
+        <h1 style="text-align: center; color: #4C7244; margin-bottom: 40px;">Veg Pickles</h1>
+        
+        <div class="product-grid">
+            <!-- Product 1 -->
+
+
+            <div class="product-card">
+                <div class="product-form">
+                    <div class="product-details">
+                        <img src="../static/images/MangoPickel.jpg" alt="Mango Pickle" class="product-image">
+                        <h3 class="product-name">Traditional Mango Pickle</h3>
+                        <p class="product-description">Aged to perfection with mustard seeds and aromatic spices.</p>
+                    </div>
+                    <select class="quantity-select" id="mango-pickle">
+                        <option value='{"weight":250,"price":150}'>250g - ₹150</option>
+                        <option value='{"weight":500,"price":280}'>500g - ₹280</option>
+                        <option value='{"weight":1000,"price":500}'>1kg - ₹500</option>
+                    </select>
+                    <button class="cart-btn" 
+                          onclick="addToCart('Traditional Mango Pickle', 'mango-pickle', '../static/images/MangoPickel.jpg')">
+                          Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Product 2 -->
+
+            <div class="product-card">
+                <div class="product-form">
+                    <div class="product-details">
+                        <img src="../static/images/Lemon pickel.jpg" alt="Lemon Pickle" class="product-image">
+                        <h3 class="product-name">Zesty Lemon Pickle</h3>
+                        <p class="product-description">Authentic Indian-style lemon pickle with traditional spices and natural preservation.</p>
+                    </div>
+                    <select class="quantity-select" id="lemon-pickle">
+                        <option value='{"weight":250,"price":120}'>250g - ₹120</option>
+                        <option value='{"weight":500,"price":220}'>500g - ₹220</option>
+                        <option value='{"weight":1000,"price":400}'>1kg - ₹400</option>
+                    </select>
+                    <button class="cart-btn" 
+                          onclick="addToCart('Zesty Lemon Pickle', 'lemon-pickle', '../static/images/Lemon pickel.jpg')">
+                          Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Product 3 -->
+
+            <div class="product-card">
+                <div class="product-form">
+                    <div class="product-details">
+                        <img src="../static/images/Tomato pickle.jpg" alt="Tomato Pickle" class="product-image">
+                        <h3 class="product-name">Tomato Pickle</h3>
+                        <p class="product-description">Crunchy carrots marinated in a blend of traditional spices and mustard oil.</p>
+                    </div>
+                    <select class="quantity-select" id="tomato-pickle">
+                        <option value='{"weight":250,"price":130}'>250g - ₹130</option>
+                        <option value='{"weight":500,"price":240}'>500g - ₹240</option>
+                        <option value='{"weight":1000,"price":450}'>1kg - ₹450</option>
+                    </select>
+                    <button class="cart-btn" 
+                          onclick="addToCart('Tomato Pickle', 'tomato-pickle', '../static/images/Tomato pickle.jpg')">
+                          Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-form">
+                    <div class="product-details">
+                        <img src="../static/images/kakarakayapickle_1_1.jpg" alt="Kakarakaya Pickle" class="product-image">
+                        <h3 class="product-name">Kakarakaya Pickle</h3>
+                        <p class="product-description">Crunchy carrots marinated in a blend of traditional spices and mustard oil.</p>
+                    </div>
+                    <select class="quantity-select" id="kakarakaya-pickle">
+                        <option value='{"weight":250,"price":130}'>250g - ₹130</option>
+                        <option value='{"weight":500,"price":240}'>500g - ₹240</option>
+                        <option value='{"weight":1000,"price":450}'>1kg - ₹450</option>
+                    </select>
+                    <button class="cart-btn" 
+                          onclick="addToCart('Kakarakaya Pickle', 'kakarakaya-pickle', '../static/images/kakarakayapickle_1_1.jpg')">
+                          Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <form method="POST" action="{{ url_for('cart') }}">
+                    <img src="../static/images/Cintakaya Pickle.jpg" alt="Chintakaya Pickle" class="product-image">
+                    <h3 class="product-name">Chintakaya Pickle</h3>
+                    <p class="product-description">Crunchy carrots marinated in a blend of traditional spices and mustard oil.</p>
+                    <input type="hidden" name="product_name" value="Chintakaya Pickle">
+                    <input type="hidden" name="category" value="veg_pickles">
+                    
+                    <select class="quantity-select" name="quantity">
+                        <option value="250">250g - ₹130</option>
+                        <option value="500">500g - ₹240</option>
+                        <option value="1000">1kg - ₹450</option>
+                    </select>
+                    <button class="cart-btn" onclick="addToCart('Chintakaya Pickle', 'Chintakaya Pickle', '../static/images/Cintakaya Pickle.jpg')">Add to Cart</button>
+
+                </form>
+            </div>
+
+            <div class="product-card">
+                <div class="product-form">
+                    <div class="product-details">
+                        <img src="../static/images/pandu mirchi.jpg" alt="Pandu Mirchi" class="product-image">
+                        <h3 class="product-name">Spicy Pandu Mirchi</h3>
+                        <p class="product-description">Crunchy carrots marinated in a blend of traditional spices and mustard oil.</p>
+                    </div>
+                    <select class="quantity-select" id="pandu-mirchi">
+                        <option value='{"weight":250,"price":130}'>250g - ₹130</option>
+                        <option value='{"weight":500,"price":240}'>500g - ₹240</option>
+                        <option value='{"weight":1000,"price":450}'>1kg - ₹450</option>
+                    </select>
+                    <button class="cart-btn" 
+                          onclick="addToCart('Spicy Pandu Mirchi', 'pandu-mirchi', '../static/images/pandu mirchi.jpg')">
+                          Add to Cart
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2024 HomeMade Pickles. All rights reserved.</p>
+    </footer>
+
+    <script>
+
+
+
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            const scrollY = window.scrollY;
+            header.style.backgroundColor = scrollY > 50 
+                ? 'rgba(76, 114, 68, 0.98)' 
+                : 'rgba(76, 114, 68, 0.95)';
+            header.style.padding = scrollY > 50 ? '8px 20px' : '12px 20px';
+        });
+
+        // Smooth Image Hover
+        document.querySelectorAll('.product-image').forEach(image => {
+            image.style.transition = 'transform 0.3s ease';
+            image.addEventListener('mouseover', () => {
+                image.style.transform = 'scale(1.05) rotate(1deg)';
+            });
+            image.addEventListener('mouseout', () => {
+                image.style.transform = 'scale(1) rotate(0)';
+            });
+        });
+
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        function addToCart(name, selectId, image) {
+            const select = document.getElementById(selectId);
+            const { weight, price } = JSON.parse(select.value);
+            
+            const item = {
+                id: Date.now(),
+                name,
+                weight: weight + 'g',
+                price: parseInt(price),
+                image,
+                qty: 1
+            };
+
+            // Check if item already exists
+            const existingItem = cart.find(i => 
+                i.name === item.name && i.weight === item.weight
+            );
+            
+            if(existingItem) {
+                existingItem.qty++;
+            } else {
+                cart.push(item);
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+        }
+
+        function updateCartCount() {
+            const count = cart.reduce((acc, item) => acc + item.qty, 0);
+            document.getElementById('cart-count').textContent = count;
+        }
+
+        // Initialize cart count
+        updateCartCount();
+    </script>
+</body>
+</html>

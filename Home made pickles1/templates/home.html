@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HomeMade Pickles & Snacks</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        
+        header {
+            background: rgba(76, 114, 68, 0.98);
+            padding: 0 40px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .logo-btn {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+            background: none;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .logo-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: rgba(255, 255, 255, 0.95);
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            padding: 10px 0;
+            top: 100%;
+            left: 0;
+            z-index: 1001;
+        }
+
+        .logo-dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            color: #4C7244;
+            padding: 12px 20px;
+            text-decoration: none;
+            display: block;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-content a:hover {
+            background: rgba(76, 114, 68, 0.05);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            padding: 12px 18px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #FFD700;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .cart-counter {
+            background: #FFD700;
+            color: #4C7244;
+            font-size: 0.9rem;
+            padding: 2px 8px;
+            border-radius: 12px;
+            margin-left: 6px;
+            font-weight: 600;
+        }
+
+        /* Modified Product Grid */
+
+        /* Adjusted Section Spacing */
+        .product-section {
+            padding: 60px 20px;  /* Reduced padding */
+        }
+
+        .product-section h1,
+        .product-section h2 {
+               margin-bottom: 20px;
+               font-size: 2.8rem;
+        }
+
+        #top-selling h1 {
+            background: linear-gradient(45deg, #4C7244, #6B8E23);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            text-shadow: 2px 2px 4px rgba(76, 114, 68, 0.15);
+        }
+
+        #summer-special h2 {
+            background: linear-gradient(45deg, #4C7244, #6B8E23);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            text-shadow: 2px 2px 4px rgba(76, 114, 68, 0.15);
+        }
+
+        /* Rest of the styles remain optimized */
+        .hero-section {
+            position: relative;
+            height: 100vh;
+            background-image: url('../static/images/Background.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 70px;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            max-width: 800px;
+        }
+
+        .hero-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            margin-bottom: 25px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+        }
+
+        .hero-content p {
+            font-size: 1.6rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        .product-section {
+            padding: 100px 20px;
+        }
+
+        .product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.product-card {
+    width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+    /* Remove fixed width and let grid handle sizing */
+    padding: 20px;
+    border-radius: 15px;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+        .product-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 15px 45px rgba(0,0,0,0.12);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 220px;
+            border-radius: 15px;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 3px solid #4C7244;
+            transition: transform 0.3s ease;
+        }
+
+        .product-name {
+            color: #4C7244;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            margin: 15px 0;
+            font-weight: 700;
+        }
+
+        .product-description {
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.6;
+            min-height: 80px;
+        }
+
+        footer {
+           background: linear-gradient(145deg, #4C7244, #3A5A35);
+           color: rgba(255, 255, 255, 0.9);
+           padding: 50px 0 30px;
+           margin-top: 60px;
+           border-top: 1px solid rgba(255, 255, 255, 0.1);
+           text-align: center;
+       }
+
+      .footer-content {
+           max-width: 1200px;
+           margin: 0 auto;
+           padding: 0 20px;
+        }
+
+        .copyright {
+           font-size: 1.2rem;
+           letter-spacing: 1.5px;
+           margin-bottom: 8px;
+           font-weight: 500;
+           text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+       }
+
+       footer p:last-child {
+          font-size: 0.95rem;
+          color: rgba(255, 255, 255, 0.7);
+          margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo-dropdown">
+                <button class="logo-btn">HomeMade Pickles & Snacks</button>
+                <div class="dropdown-content">
+                    <a href="static\about.html">About Us</a>
+                    <a href="static\contact us.html">Contact Us</a>
+                </div>
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('veg_pickles') }}">Veg Pickles</a></li>
+                <li><a href="{{ url_for('non_veg_pickles') }}">Non-Veg Pickles</a></li>
+                <li><a href="{{ url_for('snacks') }}">Snacks</a></li>
+                <li><a href="{{ url_for('login') }}">Logout</a></li>
+                <li><a href="{{ url_for('cart') }}">🛒 Cart <span id="cart-count">0</span></a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Welcome to HomeMade Pickles & Snacks!</h1>
+            <p>Your one-stop shop for delicious homemade pickles and snacks!</p>
+        </div>
+    </section>
+
+    <main>
+        <!-- Top Selling Products -->
+        <section id="top-selling" class="product-section">
+            <h1>Top Selling Pickles</h1>
+            <div class="product-grid">
+                <!-- Product cards remain same as before -->
+                <div class="product-card">
+                    <img src="../static/images/MangoPickel.jpg" alt="Mango Pickle" class="product-image">
+                    <h3 class="product-name">Traditional Mango Pickle</h3>
+                    <p class="product-description">
+                        Aged to perfection with mustard seeds and aromatic spices. 
+                        Made from fresh raw mangoes, this pickle will transport 
+                        you to grandma's kitchen!
+                    </p>
+                </div>
+
+                <div class="product-card">
+                    <img src="../static/images/chicken-boneless-pickle.jpg" alt="Chicken Pickle" class="product-image">
+                    <h3 class="product-name">Spicy Chicken Pickle</h3>
+                    <p class="product-description">
+                        Succulent chicken marinated in tangy spices and traditional herbs.
+                        A fiery, flavorful boost to rice, breads, or snacks.
+                        100% natural, slow-cooked for bold authenticity.
+                    </p>
+                </div>
+
+                <div class="product-card">
+                    <img src="../static/images/prawns_gongura.jpg" alt="Gongura Prawns Pickle" class="product-image">
+                    <h3 class="product-name">Tangy Prawns Pickle</h3>
+                    <p class="product-description">
+                        Tangy gongura leaves and juicy prawns, slow-cooked in fiery traditional spices.
+                        A zesty kick to elevate curries, rice, or snacks.
+                        100% natural—crafted for bold, authentic flavor!
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summer Specials -->
+        <section id="summer-special" class="product-section">
+            <h2>Summer Special Snacks</h2>
+            <div class="product-grid">
+                <!-- Product cards remain same as before -->
+                <div class="product-card">
+                    <img src="../static/images/Aam-Papad.jpg" alt="Aam Papad" class="product-image">
+                    <h3 class="product-name">Mango Aam Papad</h3>
+                    <p class="product-description">
+                        Sweet & tangy mango leather, sun-dried to perfection. 
+                        Kids' favorite summer treat with no added preservatives.
+                    </p>
+                </div>
+
+                <div class="product-card">
+                    <img src="../static/images/Banana1.jpg" alt="Banana Chips" class="product-image">
+                    <h3 class="product-name">Crispy Banana Chips</h3>
+                    <p class="product-description">
+                        Thinly sliced raw bananas sun-dried and lightly salted. 
+                        Gluten-free, vegan crunchy snack for all ages.
+                    </p>
+                </div>
+
+                <div class="product-card">
+                    <img src="../static/images/Sunnundalu.jpg" alt="" class="product-image">
+                    <h3 class="product-name">Sunnundalu</h3>
+                    <p class="product-description">
+                        Sunnundalu, a traditional sweet ball popular in Andhra Pradesh, 
+                        are made primarily from urad dal (black lentils), 
+                        jaggery or sugar, ghee, and cardamom
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p class="copyright">@home made pickels 2024</p>
+        <p>Preserving Traditions • Crafted with Love</p>
+    </footer>
+
+    <script>
+
+        
+        // Enhanced Header Scroll Effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            const scrollY = window.scrollY;
+            header.style.backgroundColor = scrollY > 50 
+                ? 'rgba(76, 114, 68, 0.98)' 
+                : 'rgba(76, 114, 68, 0.95)';
+            header.style.padding = scrollY > 50 ? '8px 20px' : '12px 20px';
+        });
+
+        // Smooth Image Hover
+        document.querySelectorAll('.product-image').forEach(image => {
+            image.style.transition = 'transform 0.3s ease';
+            image.addEventListener('mouseover', () => {
+                image.style.transform = 'scale(1.05) rotate(1deg)';
+            });
+            image.addEventListener('mouseout', () => {
+                image.style.transform = 'scale(1) rotate(0)';
+            });
+        });
+
+         // Cart Count Synchronization
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+            document.getElementById('cart-count').textContent = totalItems;
+        }
+
+    // Initial update
+        updateCartCount();
+    
+    // Update on cart changes (optional)
+        window.addEventListener('storage', updateCartCount);
+
+        
+    </script>
+</body>
+</html>

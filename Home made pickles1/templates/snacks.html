@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snacks - HomeMade Pickles & Snacks</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f1e4;
+        }
+
+        /* Navigation Bar (Same as home.html) */
+        header {
+            background-color: rgba(76, 114, 68, 0.95);
+            padding: 12px 20px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+            margin-left: auto;
+            padding: 0;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Search Bar */
+        .search-section {
+            margin: 100px auto 30px;
+            max-width: 1200px;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .search-bar {
+            width: 60%;
+            padding: 12px 25px;
+            border: 2px solid #4C7244;
+            border-radius: 30px;
+            font-size: 1rem;
+            margin: 0 auto;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .search-bar:focus {
+            outline: none;
+            box-shadow: 0 0 15px rgba(76, 114, 68, 0.2);
+            border-color: #3A5A35;
+        }
+
+        /* Adjust main margin */
+        main {
+            margin-top: 40px;
+        }
+
+        /* Remove old search bar styles from nav */
+        .nav-links input[type="text"] {
+            display: none;
+        }
+        
+
+        /* Product Grid */
+        main {
+            margin-top: 100px;
+            padding: 40px 20px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 220px;
+            border-radius: 15px;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 3px solid #4C7244;
+            transition: transform 0.3s ease;
+        }
+
+        .product-name {
+            font-family: 'Playfair Display', serif;
+            color: #4C7244;
+            font-size: 1.5rem;
+            margin: 10px 0;
+        }
+
+        .product-description {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        .quantity-select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .cart-btn {
+            background: #4C7244;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s ease;
+        }
+
+        .cart-btn:hover {
+            background: #3A5A35;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #4C7244;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <ul class="nav-links">
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('veg_pickles') }}">Veg Pickles</a></li>
+            <li><a href="{{ url_for('non_veg_pickles') }}">Non-Veg Pickles</a></li>
+            <li><a href="{{ url_for('snacks') }}">Snacks</a></li>
+            <li><a href="{{ url_for('cart') }}">🛒 Cart <span id="cart-count">0</span></a></li>
+        </ul>
+    </header>
+
+    <div class="search-section">
+        <form method="GET" action="{{ url_for('snacks') }}">
+            <input type="text" 
+            class="search-bar" 
+            name="search"
+            placeholder="Search snacks..."
+            aria-label="Search snacks"
+            value="{{ request.args.get('search', '') }}">
+
+        </form>
+    </div>
+
+    <main>
+        <h1 style="text-align: center; color: #4C7244; margin-bottom: 40px;">Snacks</h1>
+        
+        <div class="product-grid">
+
+            
+            <div class="product-card">
+                <div class="product-form">
+                    <div class="product-details">
+                        <img src="../static/images/Banana1.jpg" alt="Banana chips" class="product-image">
+                        <h3 class="product-name">Banana Chips</h3>
+                        <p class="product-description">Crispy and golden, our banana chips are made from fresh, ripe bananas and lightly seasoned for a perfect crunch.</p>
+                    </div>
+                    <select class="quantity-select" id="banana-chips">
+                        <option value='{"weight":250,"price":300}'>250g - ₹300</option>
+                        <option value='{"weight":500,"price":600}'>500g - ₹600</option>
+                        <option value='{"weight":1000,"price":800}'>1kg - ₹800</option>
+                    </select>
+                    <button class="cart-btn" 
+                          onclick="addToCart('Banana Chips', 'banana-chips', '../static/images/Banana1.jpg')">
+                          Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-form">
+                    <div class="product-details">
+                        <img src="../static/images/Aam-Papad.jpg" alt="Crispy Aam-Papad" class="product-image">
+                        <h3 class="product-name">Crispy Aam-Papad</h3>
+                        <p class="product-description">Sweet & tangy mango leather, sun-dried to perfection. 
+                            Kids' favorite summer treat with no added preservatives.</p>
+                    </div>
+                    <select class="quantity-select" id="aam-papad">
+                        <option value='{"weight":250,"price":150}'>250g - ₹150</option>
+                        <option value='{"weight":500,"price":300}'>500g - ₹300</option>
+                        <option value='{"weight":1000,"price":600}'>1kg - ₹600</option> <!-- Fixed price from 8600 to 600 -->
+                    </select>
+                    <button class="cart-btn" 
+                          onclick="addToCart('Crispy Aam-Papad', 'aam-papad', '../static/images/Aam-Papad.jpg')">
+                          Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            
+            <div class="product-card">
+                <div class="product-form">
+                    <div class="product-details">
+                        <img src="../static/images/Chekka Pakodi.jpg" alt="Chekka Pakodi" class="product-image">
+                        <h3 class="product-name">Crispy Chekka Pakodi</h3>
+                        <p class="product-description">Crispy and flavorful, our Chekka Pakodi is made from spiced gram flour and deep-fried to golden perfection, delivering a crunchy and savory treat.</p>
+                    </div>
+                    <select class="quantity-select" id="chekka-pakodi">
+                        <option value='{"weight":250,"price":50}'>250g - ₹50</option>
+                        <option value='{"weight":500,"price":100}'>500g - ₹100</option>
+                        <option value='{"weight":1000,"price":200}'>1kg - ₹200</option>
+                    </select>
+                    <button class="cart-btn" 
+                          onclick="addToCart('Crispy Chekka Pakodi', 'chekka-pakodi', '../static/images/Chekka Pakodi.jpg')">
+                          Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-form">
+                    <div class="product-details">
+                        <img src="../static/images/Boondhi Acchu.jpg" alt="Boondhi Acchu" class="product-image">
+                        <h3 class="product-name">Boondhi Acchu</h3>
+                        <p class="product-description">Light, crispy, and perfectly shaped, our Boondhi Acchu is made from gram flour and deep-fried to golden perfection, offering a delightful crunch in every bite.</p>
+                    </div>
+                    <select class="quantity-select" id="boondhi-acchu">
+                        <option value='{"weight":250,"price":300}'>250g - ₹300</option>
+                        <option value='{"weight":500,"price":600}'>500g - ₹600</option>
+                        <option value='{"weight":1000,"price":900}'>1kg - ₹900</option>
+                    </select>
+                    <button class="cart-btn" 
+                          onclick="addToCart('Boondhi Acchu', 'boondhi-acchu', '../static/images/Boondhi Acchu.jpg')">
+                          Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-form">
+                    <div class="product-details">
+                        <img src="../static/images/Chekkalu-3.jpg" alt="Chekkalu" class="product-image">
+                        <h3 class="product-name">Chekkalu</h3>
+                        <p class="product-description">Crispy and flavorful, our Chekkalu is made from spiced rice flour and deep-fried to golden perfection, delivering a crunchy and savory treat.</p>
+                    </div>
+                    <select class="quantity-select" id="chekkalu">
+                        <option value='{"weight":250,"price":350}'>250g - ₹350</option>
+                        <option value='{"weight":500,"price":700}'>500g - ₹700</option>
+                        <option value='{"weight":1000,"price":1000}'>1kg - ₹1000</option>
+                    </select>
+                    <button class="cart-btn" 
+                          onclick="addToCart('Chekkalu', 'chekkalu', '../static/images/Chekkalu-3.jpg')">
+                          Add to Cart
+                    </button>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-form">
+                    <div class="product-details">
+                        <img src="../static/images/ragi.jpg" alt="Ragi laddu" class="product-image">
+                        <h3 class="product-name">Ragi Laddu</h3>
+                        <p class="product-description">Nutritious and delicious, our Ragi Laddu is made with finger millet, jaggery, and ghee, offering a wholesome and healthy treat packed with natural goodness.</p>
+                    </div>
+                    <select class="quantity-select" id="ragi-laddu">
+                        <option value='{"weight":250,"price":350}'>250g - ₹350</option>
+                        <option value='{"weight":500,"price":700}'>500g - ₹700</option>
+                        <option value='{"weight":1000,"price":1000}'>1kg - ₹1000</option>
+                    </select>
+                    <button class="cart-btn" 
+                          onclick="addToCart('Ragi Laddu', 'ragi-laddu', '../static/images/ragi.jpg')">
+                          Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-form">
+                    <div class="product-details">
+                        <img src="../static/images/Dry fruit laddo.jpg" alt="Dry Fruit Laddu" class="product-image">
+                        <h3 class="product-name">Dry Fruit Laddu</h3>
+                        <p class="product-description">Nutritious and delicious, our Dry Fruit Laddu's are made with premium nuts, dates, and natural sweeteners, offering a healthy and energy-boosting treat.</p>
+                    </div>
+                    <select class="quantity-select" id="dry-fruit-laddu">
+                        <option value='{"weight":250,"price":500}'>250g - ₹500</option>
+                        <option value='{"weight":500,"price":1000}'>500g - ₹1000</option>
+                        <option value='{"weight":1000,"price":1500}'>1kg - ₹1500</option>
+                    </select>
+                    <button class="cart-btn" 
+                          onclick="addToCart('Dry Fruit Laddu', 'dry-fruit-laddu', '../static/images/Dry fruit laddo.jpg')">
+                          Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-form">
+                    <div class="product-details">
+                        <img src="../static/images/Kara-Boondi-4.jpg" alt="Kara Boondi" class="product-image">
+                        <h3 class="product-name">Kara Boondi</h3>
+                        <p class="product-description">Crispy and spicy, our Kara Boondi is made from gram flour and deep-fried to perfection, seasoned with aromatic spices for a crunchy, flavorful snack.</p>
+                    </div>
+                    <select class="quantity-select" id="kara-boondi">
+                        <option value='{"weight":250,"price":250}'>250g - ₹250</option>
+                        <option value='{"weight":500,"price":500}'>500g - ₹500</option>
+                        <option value='{"weight":1000,"price":750}'>1kg - ₹750</option>
+                    </select>
+                    <button class="cart-btn" 
+                          onclick="addToCart('Kara Boondi', 'kara-boondi', '../static/images/Kara-Boondi-4.jpg')">
+                          Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-form">
+                    <div class="product-details">
+                        <img src="../static/images/gavvalu_sweet.jpg" alt="Gavvalu" class="product-image">
+                        <h3 class="product-name">Gavvalu</h3>
+                        <p class="product-description">Delightfully crispy and coated in rich sugar syrup, our Gavvalu Sweet is a traditional treat made from refined flour, offering a perfect balance of crunch and sweetness.</p>
+                    </div>
+                    <select class="quantity-select" id="gavvalu">
+                        <option value='{"weight":250,"price":250}'>250g - ₹250</option>
+                        <option value='{"weight":500,"price":500}'>500g - ₹500</option>
+                        <option value='{"weight":1000,"price":750}'>1kg - ₹750</option>
+                    </select>
+                    <button class="cart-btn" 
+                          onclick="addToCart('Gavvalu', 'gavvalu', '../static/images/gavvalu_sweet.jpg')">
+                          Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-form">
+                    <div class="product-details">
+                        <img src="../static/images/kaju-chikki.jpg" alt="Kaju Chikki" class="product-image">
+                        <h3 class="product-name">Kaju Chikki</h3>
+                        <p class="product-description">Crunchy and nutty, our Kaju Chikki is made with premium cashews and caramelized jaggery, offering a perfectly sweet and delicious treat.</p>
+                    </div>
+                    <select class="quantity-select" id="kaju-chikki">
+                        <option value='{"weight":250,"price":250}'>250g - ₹250</option>
+                        <option value='{"weight":500,"price":500}'>500g - ₹500</option>
+                        <option value='{"weight":1000,"price":750}'>1kg - ₹750</option>
+                    </select>
+                    <button class="cart-btn" 
+                          onclick="addToCart('Kaju Chikki', 'kaju-chikki', '../static/images/kaju-chikki.jpg')">
+                          Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-form">
+                    <div class="product-details">
+                        <img src="../static/images/peanutchikki_new_2048x.jpg" alt="PeaNut Chikki" class="product-image">
+                        <h3 class="product-name">PeaNut Chikki</h3>
+                        <p class="product-description">Crunchy and wholesome, our Peanut Chikki is made with roasted peanuts and jaggery, creating a naturally sweet and delicious energy-packed treat.</p>
+                    </div>
+                    <select class="quantity-select" id="peanut-chikki">
+                        <option value='{"weight":250,"price":250}'>250g - ₹250</option>
+                        <option value='{"weight":500,"price":500}'>500g - ₹500</option>
+                        <option value='{"weight":1000,"price":750}'>1kg - ₹750</option>
+                    </select>
+                    <button class="cart-btn" 
+                          onclick="addToCart('PeaNut Chikki', 'peanut-chikki', '../static/images/peanutchikki_new_2048x.jpg')">
+                          Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-form">
+                    <div class="product-details">
+                        <img src="../static/images/rava-ladoo-featured.jpg" alt="Rava Laddu" class="product-image">
+                        <h3 class="product-name">Rava Laddu</h3>
+                        <p class="product-description">Soft and aromatic, our Rava Laddu is made with roasted semolina, ghee, and sugar, blended with cardamom for a delightful, melt-in-your-mouth treat.</p>
+                    </div>
+                    <select class="quantity-select" id="rava-laddu">
+                        <option value='{"weight":250,"price":250}'>250g - ₹250</option>
+                        <option value='{"weight":500,"price":500}'>500g - ₹500</option>
+                        <option value='{"weight":1000,"price":750}'>1kg - ₹750</option>
+                    </select>
+                    <button class="cart-btn" 
+                          onclick="addToCart('Rava Laddu', 'rava-laddu', '../static/images/rava-ladoo-featured.jpg')">
+                          Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2024 HomeMade Pickles. All rights reserved.</p>
+    </footer>
+    <script>
+        // Enhanced Header Scroll Effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            const scrollY = window.scrollY;
+            header.style.backgroundColor = scrollY > 50 
+                ? 'rgba(76, 114, 68, 0.98)' 
+                : 'rgba(76, 114, 68, 0.95)';
+            header.style.padding = scrollY > 50 ? '8px 20px' : '12px 20px';
+        });
+
+        // Smooth Image Hover
+        document.querySelectorAll('.product-image').forEach(image => {
+            image.style.transition = 'transform 0.3s ease';
+            image.addEventListener('mouseover', () => {
+                image.style.transform = 'scale(1.05) rotate(1deg)';
+            });
+            image.addEventListener('mouseout', () => {
+                image.style.transform = 'scale(1) rotate(0)';
+            });
+        });
+
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        function addToCart(name, selectId, image) {
+            const select = document.getElementById(selectId);
+            const { weight, price } = JSON.parse(select.value);
+            
+            const item = {
+                id: Date.now(),
+                name,
+                weight: weight + 'g',
+                price: parseInt(price),
+                image,
+                qty: 1
+            };
+
+            // Check for existing item
+            const existingItem = cart.find(i => 
+                i.name === item.name && i.weight === item.weight
+            );
+            
+            if(existingItem) {
+                existingItem.qty++;
+            } else {
+                cart.push(item);
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+        }
+
+        function updateCartCount() {
+            const count = cart.reduce((acc, item) => acc + item.qty, 0);
+            document.getElementById('cart-count').textContent = count;
+        }
+
+        // Initialize cart count
+        updateCartCount();
+    </script>
+</body>
+</html>

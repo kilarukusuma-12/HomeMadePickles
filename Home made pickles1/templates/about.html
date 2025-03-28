@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - HomeMade Pickles & Snacks</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet>
+    <!-- Add your existing styles from home.html -->
+</head>
+<body><!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>About Us - HomeMade Pickles & Snacks</title>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+        <style>
+            /* Consistent styling with your other pages */
+            body {
+                font-family: 'Poppins', sans-serif;
+                margin: 0;
+                background-color: #f8f1e4;
+            }
+    
+            header {
+                background-color: rgba(76, 114, 68, 0.95);
+                padding: 12px 20px;
+                color: white;
+                display: flex;
+                justify-content: flex-end;
+                position: fixed;
+                width: 100%;
+                top: 0;
+                z-index: 1000;
+            }
+    
+            .nav-links {
+                list-style: none;
+                display: flex;
+                gap: 25px;
+                margin: 0;
+                padding: 0;
+            }
+    
+            .nav-links a {
+                color: white;
+                text-decoration: none;
+                padding: 8px 15px;
+                border-radius: 20px;
+                transition: all 0.3s ease;
+            }
+    
+            .nav-links a:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+            }
+    
+            .content-wrapper {
+                max-width: 1200px;
+                margin: 100px auto 50px;
+                padding: 40px 20px;
+            }
+    
+            h1 {
+                font-family: 'Playfair Display', serif;
+                color: #4C7244;
+                text-align: center;
+                font-size: 2.5rem;
+                margin-bottom: 40px;
+            }
+    
+            .about-text {
+                background-color: white;
+                padding: 40px;
+                border-radius: 15px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                line-height: 1.8;
+                color: #666;
+            }
+    
+            footer {
+                background-color: #4C7244;
+                color: white;
+                text-align: center;
+                padding: 20px;
+                margin-top: 50px;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('cart') }}">🛒 Cart</a></li>
+                </ul>
+            </nav>
+        </header>
+    
+        <div class="content-wrapper">
+            <h1>Our Story</h1>
+            
+            <div class="about-text">
+                <h2 style="color: #4C7244; margin-bottom: 25px;">Preserving Traditions Since 1995</h2>
+                <p>
+                    HomeMade Pickles & Snacks began in a small kitchen with a big dream - to share 
+                    the authentic flavors of Indian pickling traditions with the world. For three 
+                    generations, our family has perfected the art of pickle-making using traditional 
+                    recipes and natural ingredients.
+                </p>
+    
+                <h2 style="color: #4C7244; margin: 30px 0 15px;">Our Philosophy</h2>
+                <p>
+                    We believe in preserving the authentic taste of homemade pickles without any artificial 
+                    preservatives. Every jar is crafted with the same care and attention we give to food 
+                    prepared for our own family.
+                </p>
+    
+                <h2 style="color: #4C7244; margin: 30px 0 15px;">The Homemade Difference</h2>
+                <ul style="padding-left: 20px;">
+                    <li>100% Natural Ingredients</li>
+                    <li>Traditional Sun-Drying Methods</li>
+                    <li>Handcrafted in Small Batches</li>
+                    <li>No Artificial Preservatives</li>
+                </ul>
+            </div>
+        </div>
+    
+        <footer>
+            <p>© 2024 HomeMade Pickles. All rights reserved.</p>
+            <p style="margin-top: 10px; font-size: 0.9rem;">Crafted with ❤️ in India</p>
+        </footer>
+    </body>
+    </html>
+    <!-- Copy header from home.html -->
+    <header>
+        <!-- ... same header as home.html ... -->
+    </header>
+
+    <main class="about-section" style="padding: 100px 20px; max-width: 1200px; margin: 0 auto;">
+        <h1 style="color: #4C7244; text-align: center; margin-bottom: 40px;">Our Story</h1>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+            <img src="../static/images/about.jpg" alt="Our Kitchen" style="width: 100%; border-radius: 15px;">
+            
+            <div>
+                <h2 style="color: #4C7244; font-family: 'Playfair Display'; margin-bottom: 20px;">
+                    Preserving Traditions Since 1995
+                </h2>
+                <p style="line-height: 1.6; color: #666;">
+                    HomeMade Pickles & Snacks began in a small kitchen with a big dream - to share 
+                    the authentic flavors of Indian pickling traditions with the world. For three 
+                    generations, our family has perfected the art of pickle-making using traditional 
+                    recipes and natural ingredients.
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Copy footer from home.html -->
+    <footer>
+        <!-- ... same footer as home.html ... -->
+    </footer>
+</body>
+</html>

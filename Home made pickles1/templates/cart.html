@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - HomeMade Pickles & Snacks</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* Keep all existing styles from your original cart.html */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f1e4;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: rgba(76, 114, 68, 0.95);
+            padding: 12px 20px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+            margin-left: auto;
+            padding: 0;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 100px auto 50px;
+            padding: 40px 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background-color: #4C7244;
+            color: white;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+        }
+
+        tr:hover {
+            background-color: #f8f8f8;
+        }
+
+        .remove-btn {
+            color: #ff4444;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+
+        .remove-btn:hover {
+            color: #cc0000;
+        }
+
+        .checkout-btn {
+            background: #4C7244;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background 0.3s ease;
+            margin-top: 30px;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .checkout-btn:hover {
+            background: #3A5A35;
+        }
+
+        .total-amount {
+            color: #4C7244;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin: 30px 0;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quantity-btn {
+            background: #4C7244;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cart-image {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 2px solid #4C7244;
+            margin-right: 15px;
+        }
+
+        footer {
+            background-color: #4C7244;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <ul class="nav-links">
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('cart') }}">🛒 Cart <span id="cart-count">0</span></a></li>
+        </ul>
+    </header>
+
+    <div class="container">
+        <h1 style="text-align: center; color: #4C7244; margin-bottom: 40px;">Your Shopping Cart</h1>
+        <div id="cart-items"></div>
+        <div class="total-amount" id="total-amount"></div>
+        <a href="{{ url_for('checkout') }}" class="checkout-btn">Proceed to Checkout</a>
+    </div>
+
+    <footer>
+        <p>© 2024 HomeMade Pickles. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Cart Management System
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        function renderCart() {
+            const container = document.getElementById('cart-items');
+            const totalElement = document.getElementById('total-amount');
+            let html = '';
+            let total = 0;
+
+            // Clear previous content
+            container.innerHTML = '';
+            
+            if (cart.length === 0) {
+                html = `<p style="text-align: center; font-size: 1.2rem; color: #666; margin-top: 30px;">
+                            Your cart is empty.
+                        </p>`;
+            } else {
+                html = `<table>
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>`;
+
+                cart.forEach(item => {
+                    const itemTotal = item.price * item.qty;
+                    total += itemTotal;
+                    html += `
+                        <tr>
+                            <td>
+                                <img src="${item.image}" alt="${item.name}" 
+                                     style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px; margin-right: 15px;">
+                                ${item.name} (${item.weight})
+                            </td>
+                            <td>₹${item.price}</td>
+                            <td>
+                                <div class="quantity-controls">
+                                    <button onclick="updateQuantity(${item.id}, -1)" 
+                                            class="quantity-btn">-</button>
+                                    <input type="number" value="${item.qty}" 
+                                           min="1" class="quantity-input" readonly>
+                                    <button onclick="updateQuantity(${item.id}, 1)" 
+                                            class="quantity-btn">+</button>
+                                </div>
+                            </td>
+                            <td>₹${itemTotal}</td>
+                            <td>
+                                <button onclick="removeItem(${item.id})" 
+                                        class="remove-btn">Remove</button>
+                            </td>
+                        </tr>`;
+                });
+
+                html += `</tbody></table>`;
+            }
+            
+            container.innerHTML = html;
+            totalElement.innerHTML = `Total Amount: ₹${total}`;
+            updateCartCount();
+        }
+
+        function updateQuantity(itemId, change) {
+            cart = cart.map(item => {
+                if(item.id === itemId) {
+                    item.qty = Math.max(1, item.qty + change);
+                }
+                return item;
+            });
+            localStorage.setItem('cart', JSON.stringify(cart));
+            renderCart();
+        }
+
+        function removeItem(itemId) {
+            cart = cart.filter(item => item.id !== itemId);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            renderCart();
+        }
+
+        function updateCartCount() {
+            const count = cart.reduce((acc, item) => acc + item.qty, 0);
+            document.getElementById('cart-count').textContent = count;
+        }
+
+        // Initial render when page loads
+        renderCart();
+    </script>
+</body>
+</html>
